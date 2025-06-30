@@ -170,6 +170,7 @@ class apibot():
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
                 sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount})
+                print(sell_order)
                 amount_received = float(sell_order["filledAmountQuote"])
                 fee_paid = float(sell_order["fills"][0]["fee"])
                 total_received = round(amount_received-fee_paid,2)
