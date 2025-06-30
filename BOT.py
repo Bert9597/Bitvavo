@@ -339,6 +339,7 @@ class apibot():
                     "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
+            print(open_orders)
             if os.path.exists(bot._file_path) and bot._file_path is not None:
                 with open(bot._file_path, 'r') as f:
                     data = json.load(f)
