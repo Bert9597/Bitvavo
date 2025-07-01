@@ -299,6 +299,7 @@ class apibot():
             current_price = bot.get_market_price(market)
             df = self.get_bitvavo_data(market, '15m', 100)
             df = self.add_indicators(df)
+            print(df)
             
             if df is not None:
                 last_row = df.iloc[-1]
@@ -361,6 +362,8 @@ class apibot():
                     
                                     
 if __name__ == '__main__':
+    print(api_key)
+    print(api_secret)
     bot = apibot()
     bot.check_orders(['RED-EUR', 'MKR-EUR', 'ICP-EUR'])
     app.add_handler(CallbackQueryHandler(bot.knop_handler))
