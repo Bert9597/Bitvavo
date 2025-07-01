@@ -170,7 +170,6 @@ class apibot():
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
                 sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount})
-                print(sell_order)
                 amount_received = float(sell_order["filledAmountQuote"])
                 fee_paid = float(sell_order["fills"][0]["fee"])
                 total_received = round(amount_received-fee_paid,2)
@@ -299,7 +298,6 @@ class apibot():
             current_price = bot.get_market_price(market)
             df = self.get_bitvavo_data(market, '15m', 100)
             df = self.add_indicators(df)
-            print(df)
             
             if df is not None:
                 last_row = df.iloc[-1]
@@ -340,7 +338,6 @@ class apibot():
                     "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
-            print(open_orders)
             if os.path.exists(bot._file_path) and bot._file_path is not None:
                 with open(bot._file_path, 'r') as f:
                     data = json.load(f)
@@ -362,8 +359,6 @@ class apibot():
                     
                                     
 if __name__ == '__main__':
-    print(api_key)
-    print(api_secret)
     bot = apibot()
     bot.check_orders(['RED-EUR', 'MKR-EUR', 'ICP-EUR'])
     app.add_handler(CallbackQueryHandler(bot.knop_handler))
