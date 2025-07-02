@@ -88,6 +88,7 @@ class apibot():
 
         if antwoord == "ja":
             self._placebuyorder = {"market": key, "amount": amount}
+            print(self._placebuyorder)
             await self.place_market_order()
             sys.exit()
 
@@ -106,6 +107,7 @@ class apibot():
 
         if keuze == "ja":
             self._placebuyorder = {"market": key, "amount": amount}
+            print(self._placebuyorder)
             await self.place_market_order()
 
             sys.exit()
