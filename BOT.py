@@ -108,7 +108,6 @@ class apibot():
 
         if keuze == "ja":
             self._placebuyorder = {"market": key, "amount": amount}
-            print(self._placebuyorder)
             await self.place_market_order()
 
             sys.exit()
@@ -208,11 +207,9 @@ class apibot():
                         json.dump(data, f, indent=4)
 
         if self._placebuyorder:
-            print(self._placebuyorder)
             market = self._placebuyorder['market']
             amount = self._placebuyorder['amount']
             order = bitvavo.placeOrder(market, 'buy', 'market', {'amount': amount, 'operatorId': self._operator_id})
-            print(order)
             fee_paid = float(order["fills"][0]["fee"])
             amount_filled = float(order["filledAmountQuote"])
             total_paid = round(fee_paid+amount_filled,2)
