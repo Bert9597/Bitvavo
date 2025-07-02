@@ -349,6 +349,9 @@ class apibot():
                     data = json.load(f)
                     for order in data:
                         for i in open_orders:
+                            if order['Id'] != i['orderId']:
+                                order['type'] = "Sold"
+                                
                             if order['market'] == market and order['type'] == 'Open':
                                 profit = round((float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
                                 order['huidige_marktprijs'] = current_price 
