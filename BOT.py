@@ -38,6 +38,7 @@ class apibot():
         self._chat_id = -4717875969
         self._msg_id = None
         self._file_path = os.getenv("FILE_PATH_BUYORDERS")
+        self._operator_id = 'bitvavo_bot'
 
 
     async def timeout_sessie(self, chat_id):
@@ -130,7 +131,8 @@ class apibot():
              'triggerType': 'price',
              'stopPrice': stop_loss_price,
              'triggerAmount': stop_loss_price,
-             'triggerReference': 'bestBid'
+             'triggerReference': 'bestBid',
+             'operatorId': self._operator_id
         })
 
         if 'error' in stop_loss_order:
@@ -171,7 +173,7 @@ class apibot():
                 total_paid = v["total_paid"]
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
-                sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount})
+                sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount}, 'operatorId': self._operator_id)
                 amount_received = float(sell_order["filledAmountQuote"])
                 fee_paid = float(sell_order["fills"][0]["fee"])
                 total_received = round(amount_received-fee_paid,2)
@@ -209,7 +211,7 @@ class apibot():
             print(self._placebuyorder)
             market = self._placebuyorder['market']
             amount = self._placebuyorder['amount']
-            order = bitvavo.placeOrder(market, "buy", 'market', {'amount': amount})
+            order = bitvavo.placeOrder(market, "buy", 'market', {'amount': amount}, 'operatorId': self._operator_id)
             print(order)
             fee_paid = float(order["fills"][0]["fee"])
             amount_filled = float(order["filledAmountQuote"])
