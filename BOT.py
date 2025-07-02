@@ -344,13 +344,24 @@ class apibot():
                     "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
+            print(open_orders)
             if os.path.exists(self._file_path) and self._file_path is not None:
                 with open(self._file_path, 'r') as f:
                     data = json.load(f)
                     for order in data:
                         for i in open_orders:
                             if order['Id'] != i['orderId']:
+                                today = date.today()
                                 order['type'] = "Sold"
+                                response = bitvavo.trades(order["market"], {})
+                                for x in response:
+                                    if x['orderId'] == order['Id'] and x['side'] == 'sell':
+                                        paid_fee = float(x['fee'])
+                                        eur_received = float(x['price']) * float(x['amount'])
+                                        eur_received_net = float(eur_received) - float(paid_fee)
+                                        loss = eur_received_net - order['total_paid'] 
+                                        order['eur_loss'] = round(loss,2)
+                                        order['date'] = today 
                                 
                             if order['market'] == market and order['type'] == 'Open':
                                 profit = round((float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
