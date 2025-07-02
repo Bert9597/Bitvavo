@@ -204,6 +204,7 @@ class apibot():
                         json.dump(data, f, indent=4)
 
         if self._placebuyorder:
+            print(self._placebuyorder)
             market = self._placebuyorder['market']
             amount = self._placebuyorder['amount']
             order = bitvavo.placeOrder(market, "buy", 'market', {'amount': amount})
