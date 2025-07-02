@@ -77,7 +77,9 @@
         "total_paid": 10.18,
         "Id": "00000000-0000-05d4-0100-00017641b490",
         "huidige_marktprijs": 0.241,
-        "profit_percentage": "-0.24%"
+        "profit_percentage": "-0.24%",
+        "eur_loss": -0.77,
+        "date": "2025-07-02"
     },
     {
         "type": "Sold",
@@ -114,5 +116,13 @@
         "price": "4.1024",
         "total_paid": 10.04,
         "Id": "00000000-0000-04ad-0100-000180c34e75"
+    },
+    {
+        "type": "Open",
+        "market": "ICP-EUR",
+        "amount": "2.424",
+        "price": "4.1333",
+        "total_paid": 10.05,
+        "Id": "00000000-0000-04ad-0100-0001811e91df"
     }
 ]
