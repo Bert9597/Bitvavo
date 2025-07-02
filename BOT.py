@@ -208,6 +208,7 @@ class apibot():
             market = self._placebuyorder['market']
             amount = self._placebuyorder['amount']
             order = bitvavo.placeOrder(market, "buy", 'market', {'amount': amount})
+            print(order)
             fee_paid = float(order["fills"][0]["fee"])
             amount_filled = float(order["filledAmountQuote"])
             total_paid = round(fee_paid+amount_filled,2)
