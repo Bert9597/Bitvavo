@@ -9,7 +9,7 @@ from telegram.ext import ApplicationBuilder, CallbackQueryHandler, ContextTypes,
 import asyncio
 import sys
 import ta
-from datetime import datetime
+from datetime import date
 
 api_keys = json.loads(os.getenv('API_KEYS'))
 api_key = api_keys['API_KEY']
@@ -38,7 +38,7 @@ class apibot():
         self._chat_id = -4717875969
         self._msg_id = None
         self._file_path = os.getenv("FILE_PATH_BUYORDERS")
-        self._operator_id = 'bitvavo_bot'
+        self._operator_id = 426553
 
 
     async def timeout_sessie(self, chat_id):
@@ -125,16 +125,14 @@ class apibot():
         stop_loss_price = value['stop_loss']
         stop_loss_limit = value["stop_limit"]
 
-        stop_loss_order = bitvavo.placeOrder(market, {
-             'side': 'sell', 
-             'orderType': 'stopLossLimit',
-             'amount': amount,
-             'price': stop_loss_limit,
-             'triggerType': 'price',
-             'stopPrice': stop_loss_price,
-             'triggerAmount': stop_loss_price,
-             'triggerReference': 'bestBid',
-             'operatorId': self._operator_id
+        stop_loss_order = bitvavo.placeOrder(market, 'sell', 'stopLossLimit', {
+            'amount': amount,
+            'price': stop_loss_limit,
+            'triggerType': 'price',
+            'stopPrice': stop_loss_price,
+            'triggerAmount': stop_loss_price,
+            'triggerReference': 'bestBid',
+            'operatorId': self._operator_id
         })
 
         if 'error' in stop_loss_order:
@@ -175,7 +173,7 @@ class apibot():
                 total_paid = v["total_paid"]
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
-                sell_order = bitvavo.placeOrder(market, {'side': "sell", 'orderType': "market", 'amount': amount,  'operatorId': self._operator_id})
+                sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount,  'operatorId': self._operator_id})
                 amount_received = float(sell_order["filledAmountQuote"])
                 fee_paid = float(sell_order["fills"][0]["fee"])
                 total_received = round(amount_received-fee_paid,2)
@@ -191,34 +189,34 @@ class apibot():
                     await self._bot.send_message(chat_id=self._chat_id, text=error_message)
 
                 else:
-                    date = datetime.now()
+                    today = date.today()
                     success_message = f"Verkoop order: {market} succesvol\n" \
                                       f"€{profit} winst!"
                     await self._bot.send_message(chat_id=self._chat_id, text=success_message)
 
-                    if os.path.exists(file_path):
+                    if os.path.exists(self._file_path):
                         with open(self._file_path, "r") as f:       
                             data = json.read(f)
             
-                    with open(self._file_path, "w") as f:
-                        for order in data:
-                            if order['Id'] == id:
-                                order['eur_profit'] = profit
-                                order['date'] = datetime.date(now)
-                                order['type'] = "sold"
-                                
+                        with open(self._file_path, "w") as f:
+                            for order in data:
+                                if order['Id'] == id:
+                                    order['eur_profit'] = profit
+                                    order['date'] = str(today)
+                                    order['type'] = "Sold"
+                                    
                         json.dump(data, f, indent=4)
 
         if self._placebuyorder:
             print(self._placebuyorder)
             market = self._placebuyorder['market']
             amount = self._placebuyorder['amount']
-            order = bitvavo.placeOrder(market, {'side': 'buy', 'orderType': 'market', 'amount': amount, 'operatorId': self._operator_id})
+            order = bitvavo.placeOrder(market, 'buy', 'market', {'amount': amount, 'operatorId': self._operator_id})
             print(order)
             fee_paid = float(order["fills"][0]["fee"])
             amount_filled = float(order["filledAmountQuote"])
             total_paid = round(fee_paid+amount_filled,2)
-            self._writebuyorder = {"type": "open", "market": market, "amount": order["fills"][0]["amount"],
+            self._writebuyorder = {"type": "Open", "market": market, "amount": order["fills"][0]["amount"],
                                    "price": order["fills"][0]["price"], "total_paid": total_paid}
 
 
@@ -346,12 +344,12 @@ class apibot():
                     "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
-            if os.path.exists(bot._file_path) and bot._file_path is not None:
-                with open(bot._file_path, 'r') as f:
+            if os.path.exists(self._file_path) and self._file_path is not None:
+                with open(self._file_path, 'r') as f:
                     data = json.load(f)
                     for order in data:
                         for i in open_orders:
-                            if order['market'] == market and i["orderId"] == order["Id"]:
+                            if order['market'] == market and order['type'] == 'Open:
                                 profit = round((float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
                                 order['huidige_marktprijs'] = current_price 
                                 order['profit_percentage'] = "{}%".format(profit)
@@ -360,7 +358,7 @@ class apibot():
                                     bitvavo.cancelOrder(market, order["Id"])
                                     self._placesellorders[market] = {"amount": order["amount"], "Id": order["Id"],
                                                                      "total_paid": order["total_paid"]}
-                with open (bot._file_path, 'w') as f:
+                with open (self._file_path, 'w') as f:
                     json.dump(data, f, indent=4)
                     
                                     
