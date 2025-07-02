@@ -1,6 +1,6 @@
 [
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "2.444",
         "price": "4.0942",
@@ -10,7 +10,7 @@
         "profit_percentage": "-0.13%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "2.473",
         "price": "4.0477",
@@ -20,7 +20,7 @@
         "profit_percentage": "1.02%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "MKR-EUR",
         "amount": "0.006",
         "price": "1604.2",
@@ -30,7 +30,7 @@
         "profit_percentage": "2.69%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "MKR-EUR",
         "amount": "0.006",
         "price": "1630.8",
@@ -40,7 +40,7 @@
         "profit_percentage": "1.02%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "MKR-EUR",
         "amount": "0.006",
         "price": "1632.1",
@@ -50,7 +50,7 @@
         "profit_percentage": "0.94%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "MKR-EUR",
         "amount": "0.006",
         "price": "1641.1",
@@ -60,7 +60,7 @@
         "profit_percentage": "0.38%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "MKR-EUR",
         "amount": "0.006",
         "price": "1646.3",
@@ -70,7 +70,7 @@
         "profit_percentage": "0.07%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "RED-EUR",
         "amount": "41.999",
         "price": "0.24158",
@@ -80,7 +80,7 @@
         "profit_percentage": "-0.24%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "RED-EUR",
         "amount": "44.545",
         "price": "0.24042",
@@ -90,7 +90,7 @@
         "profit_percentage": "3.86%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "2.434",
         "price": "4.1056",
@@ -100,7 +100,7 @@
         "profit_percentage": "-0.41%"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "2.443",
         "price": "4.0872",
@@ -108,7 +108,7 @@
         "Id": "00000000-0000-04ad-0100-000180d37a5e"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "2.441",
         "price": "4.1024",
