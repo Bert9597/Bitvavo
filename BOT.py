@@ -30,8 +30,8 @@ class apibot():
     def __init__(self):
         self._bot = None
         self._buy_signals = {}
-        self._placesellorders = {}
-        self._placebuyorder = {}
+        self._placesellorders = []
+        self._placebuyorder = []
         self._writebuyorder = {}
         self._orders = None
         self._index = 0
@@ -165,11 +165,11 @@ class apibot():
 
     async def place_market_order(self):
         if self._placesellorders:
-            for k, v in self._placesellorders.items():
-                market = k
-                id = v['Id']
-                amount = v['amount']
-                total_paid = v["total_paid"]
+            for i in self._placesellorders:
+                market = i['market']
+                id = i['Id']
+                amount = i['amount']
+                total_paid = i["total_paid"]
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
                 sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount,  'operatorId': self._operator_id})
@@ -353,9 +353,12 @@ class apibot():
                                 order['profit_percentage'] = "{}%".format(profit)
                             
                                 if last_row['EMA_below'] and profit >= 2:
+                                    data = {"market": market, "amount": order["amount"], "Id": order["Id"],
+                                            "total_paid": order["total_paid"]}
+                                    
                                     bitvavo.cancelOrder(market, order["Id"])
-                                    self._placesellorders[market] = {"amount": order["amount"], "Id": order["Id"],
-                                                                     "total_paid": order["total_paid"]}
+                                    self._placesellorders.append(data)
+                                    
                 with open (self._file_path, 'w') as f:
                     json.dump(data, f, indent=4)
                     
