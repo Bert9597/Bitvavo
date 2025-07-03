@@ -348,9 +348,9 @@ class apibot():
                     for order in data:
                         for i in open_orders: 
                             if order['Id'] not in i.values():
-                                print(order['Id'])
                                 history = bitvavo.trades(order['market'], {})
                                 for x in history:
+                                    print(x)
                                     if order['Id'] == x['orderId']:
                                         fee_paid = float(x['fee'])
                                         received = float(x['amount']) * float(x['price'])
