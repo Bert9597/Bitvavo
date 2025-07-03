@@ -9,7 +9,7 @@ from telegram.ext import ApplicationBuilder, CallbackQueryHandler, ContextTypes,
 import asyncio
 import sys
 import ta
-from datetime import date
+from datetime import date, datetime
 
 api_keys = json.loads(os.getenv('API_KEYS'))
 api_key = api_keys['API_KEY']
