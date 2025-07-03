@@ -341,7 +341,6 @@ class apibot():
                     "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
-            print(open_orders)
             if os.path.exists(self._file_path) and self._file_path is not None:
                 with open(self._file_path, 'r') as f:
                     data = json.load(f)
@@ -350,7 +349,7 @@ class apibot():
                             if order['Id'] not in i.values():
                                 history = bitvavo.trades(order['market'], {})
                                 for x in history:
-                                    print(x)
+                                    print(type(x))
                                     if order.get('Id') == x.get('orderId'):
                                         fee_paid = float(x['fee'])
                                         received = float(x['amount']) * float(x['price'])
