@@ -349,8 +349,7 @@ class apibot():
                             if order['Id'] not in i.values():
                                 history = bitvavo.trades(order['market'], {})
                                 for x in history:
-                                    print(type(x))
-                                    if order.get('Id') == x.get('orderId'):
+                                   if isinstance(x, dict) and order.get('Id') == x.get('orderId'):
                                         fee_paid = float(x['fee'])
                                         received = float(x['amount']) * float(x['price'])
                                         net_received = round(received - fee_paid,2)
