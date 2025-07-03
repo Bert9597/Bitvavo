@@ -355,10 +355,14 @@ class apibot():
                                         fee_paid = x['fee']
                                         received = float(x['amount']) * float(x['price'])
                                         net_received = round(received - fee_paid,2)
+                                        timestamp = x['timestamp']
+                                        timestamp_s = timestamp / 1000
+                                        dt_object = datetime.fromtimestamp(timestamp_s)
+                                        date = dt_object.strftime("%Y-%m-%d")
                                         
                                 eur_loss = round(net_received - order['total_paid'],2)
                                 order['type'] = 'Sold'
-                                order['date'] = str(today)
+                                order['date'] = date
                                 order['eur_loss'] = eur_loss
                                 
                             elif order['market'] == market and order['Id'] == i['orderId']:
