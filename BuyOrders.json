@@ -178,8 +178,8 @@
         "price": "1657.1",
         "total_paid": 9.97,
         "Id": "00000000-0000-04f1-0100-0001828074b7",
-        "huidige_marktprijs": 1667.2,
-        "profit_percentage": "0.61%"
+        "huidige_marktprijs": 1687.8,
+        "profit_percentage": "1.85%"
     },
     {
         "type": "Open",
@@ -190,5 +190,13 @@
         "Id": "00000000-0000-05d4-0100-000183f9f4b4",
         "huidige_marktprijs": 0.2661,
         "profit_percentage": "-0.29%"
+    },
+    {
+        "type": "Open",
+        "market": "RED-EUR",
+        "amount": "37.58",
+        "price": "0.26228",
+        "total_paid": 9.89,
+        "Id": "00000000-0000-05d4-0100-000184423eab"
     }
 ]
