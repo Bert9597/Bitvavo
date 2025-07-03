@@ -351,7 +351,7 @@ class apibot():
                                 history = bitvavo.trades(order['market'], {})
                                 for x in history:
                                     if order['Id'] == x['orderId']:
-                                        fee_paid = x['fee']
+                                        fee_paid = float(x['fee'])
                                         received = float(x['amount']) * float(x['price'])
                                         net_received = round(received - fee_paid,2)
                                         timestamp = x['timestamp']
