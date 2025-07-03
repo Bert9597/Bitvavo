@@ -195,7 +195,7 @@ class apibot():
 
                     if os.path.exists(self._file_path):
                         with open(self._file_path, "r") as f:       
-                            data = json.read(f)
+                            data = json.load(f)
             
                         with open(self._file_path, "w") as f:
                             for order in data:
