@@ -342,12 +342,26 @@ class apibot():
 
             open_orders = bitvavo.ordersOpen({})
             print(open_orders)
+            today = date.today()
             if os.path.exists(self._file_path) and self._file_path is not None:
                 with open(self._file_path, 'r') as f:
                     data = json.load(f)
                     for order in data:
-                        for i in open_orders:    
-                            if order['market'] == market and order['Id'] == i['orderId']:
+                        for i in open_orders: 
+                            if order['Id'] not in i.values():
+                                history = bitvavo.trades(order[market], {})
+                                for x in history:
+                                    if order['Id'] == x['orderId']:
+                                        fee_paid = x['fee']
+                                        received = float(x['amount']) * float(x['price'])
+                                        net_received = round(received - fee_paid,2)
+                                        
+                                eur_loss = round(net_received - order['total_paid'],2)
+                                order['type'] = 'Sold'
+                                order['date'] = str(today)
+                                order['eur_loss'] = eur_loss
+                                
+                            elif order['market'] == market and order['Id'] == i['orderId']:
                                 profit = round((float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
                                 order['huidige_marktprijs'] = current_price 
                                 order['profit_percentage'] = "{}%".format(profit)
