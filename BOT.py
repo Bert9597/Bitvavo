@@ -166,6 +166,7 @@ class apibot():
     async def place_market_order(self):
         if self._placesellorders:
             for i in self._placesellorders:
+                print(i)
                 market = i['market']
                 id = i['Id']
                 amount = i['amount']
@@ -173,6 +174,7 @@ class apibot():
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
                 sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount,  'operatorId': self._operator_id})
+                print(sell_order)
                 
                 
                 if 'error' in cancel_order:
