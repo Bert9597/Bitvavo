@@ -38,8 +38,7 @@ class apibot():
         self._chat_id = -4717875969
         self._msg_id = None
         self._file_path = os.getenv("FILE_PATH_BUYORDERS")
-        self._operator_id = 426553
-
+        self._operator_id = 4537
 
     async def timeout_sessie(self, chat_id):
         try:
@@ -47,7 +46,6 @@ class apibot():
             sys.exit()  # Hele programma stoppen
         except asyncio.CancelledError:
             pass
-
 
     def maak_knoppen(self):
         return InlineKeyboardMarkup([
@@ -68,7 +66,7 @@ class apibot():
             prijs_per_eenheid = value['huidige_marktprijs']
             markt = key
 
-            buy_message = f"Koopsignaal:\nValuta: {markt}\nPrijs per eenheid: €{round(prijs_per_eenheid,2)}\n\n " \
+            buy_message = f"Koopsignaal:\nValuta: {markt}\nPrijs per eenheid: €{round(prijs_per_eenheid, 2)}\n\n " \
                           f"Totaalbedrag: €{value['orderprijs']}\n" \
                           f"Je hebt €{self.check_balance('EUR')} beschikbaar, wil je deze aankoop bevestigen?"
 
@@ -93,11 +91,9 @@ class apibot():
             await self.place_market_order()
             sys.exit()
 
-
         if antwoord == "nee":
             self._index += 1
             await self.manage_orders(app)
-
 
     async def knop_handler(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         query = update.callback_query
@@ -115,7 +111,6 @@ class apibot():
         elif keuze == "nee":
             self._index += 1
             await self.manage_orders(app)
-
 
     async def place_stop_loss(self):
         key, value = list(self._buy_signals.items())[self._index]
@@ -136,7 +131,8 @@ class apibot():
 
         if 'error' in stop_loss_order:
             print(f"Fout bij plaatsen stop-loss order: {stop_loss_order['error']}")
-            await self._bot.send_message(chat_id=self._chat_id, text=f"Fout bij het plaatsen van stop-loss order: {stop_loss_order['error']}")
+            await self._bot.send_message(chat_id=self._chat_id,
+                                         text=f"Fout bij het plaatsen van stop-loss order: {stop_loss_order['error']}")
 
         else:
             print(f"Stop-loss order succesvol geplaatst!")
@@ -144,6 +140,7 @@ class apibot():
                                          text=(f"Stop-loss order succesvol geplaatst!"))
 
             self._writebuyorder["Id"] = stop_loss_order["orderId"]
+            self._writebuyorder['operatorId'] = self._operator_id
             if os.path.exists(self._file_path):
                 try:
                     with open(self._file_path, 'r') as f:
@@ -155,7 +152,7 @@ class apibot():
                     data = []
             else:
                 data = []
-                
+
             data.append(self._writebuyorder)
 
             with open(self._file_path, 'w') as f:
@@ -163,21 +160,17 @@ class apibot():
 
             return stop_loss_order
 
-
     async def place_market_order(self):
         if self._placesellorders:
             for i in self._placesellorders:
-                print(i)
                 market = i['market']
-                id = i['Id']
+                Id = i['Id']
                 amount = i['amount']
                 total_paid = i["total_paid"]
-                
-                cancel_order = bitvavo.cancelOrder(market, id)
-                sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount,  'operatorId': self._operator_id})
-                print(sell_order)
-                
-                
+
+                cancel_order = bitvavo.cancelOrder(market, Id, self._operator_id)
+                sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount, 'operatorId': self._operator_id})
+
                 if 'error' in cancel_order:
                     error_message = f"Fout bij annuleren van stoploss order: {id}"
                     await self._bot.send_message(chat_id=self._chat_id, text=error_message)
@@ -191,24 +184,24 @@ class apibot():
                     today = date.today()
                     amount_received = float(sell_order["filledAmountQuote"])
                     fee_paid = float(sell_order["fills"][0]["fee"])
-                    total_received = round(amount_received-fee_paid,2)
-                    profit = round(total_received-total_paid,2)
-                    
+                    total_received = round(amount_received - fee_paid, 2)
+                    profit = round(total_received - total_paid, 2)
+
                     success_message = f"Verkoop order: {market} succesvol\n" \
                                       f"€{profit} winst!"
                     await self._bot.send_message(chat_id=self._chat_id, text=success_message)
 
                     if os.path.exists(self._file_path):
-                        with open(self._file_path, "r") as f:       
+                        with open(self._file_path, "r") as f:
                             data = json.load(f)
-            
+
                         with open(self._file_path, "w") as f:
                             for order in data:
-                                if order['Id'] == id:
+                                if order['Id'] == Id:
                                     order['eur_profit'] = profit
                                     order['date'] = str(today)
                                     order['type'] = "Sold"
-                                    
+
                             json.dump(data, f, indent=4)
 
         if self._placebuyorder:
@@ -217,10 +210,9 @@ class apibot():
             order = bitvavo.placeOrder(market, 'buy', 'market', {'amount': amount, 'operatorId': self._operator_id})
             fee_paid = float(order["fills"][0]["fee"])
             amount_filled = float(order["filledAmountQuote"])
-            total_paid = round(fee_paid+amount_filled,2)
+            total_paid = round(fee_paid + amount_filled, 2)
             self._writebuyorder = {"type": "Open", "market": market, "amount": order["fills"][0]["amount"],
                                    "price": order["fills"][0]["price"], "total_paid": total_paid}
-
 
             if 'error' in order:
                 error_message = f"Fout bij plaatsen koop order: {order['error']}"
@@ -252,7 +244,6 @@ class apibot():
             df['EMA_21_above_EMA_55'] = df['EMA_21'] > df['EMA_55']
             df['EMA_55_above_EMA_89'] = df['EMA_55'] > df['EMA_89']
 
-
             df['EMA_above'] = (df['EMA_8_above_EMA_13'] &
                                df['EMA_13_above_EMA_21'] &
                                df['EMA_21_above_EMA_55'] &
@@ -261,7 +252,6 @@ class apibot():
             df['EMA_below'] = (~df['EMA_8_above_EMA_13'])
 
             return df
-
 
     def check_balance(self, asset):
         balance = bitvavo.balance({'symbol': asset})
@@ -274,7 +264,6 @@ class apibot():
 
                     return available_balance
         return 0.0
-
 
     def get_bitvavo_data(self, market, interval, limit):
         response = bitvavo.candles(market, interval, {'limit': limit})
@@ -294,7 +283,6 @@ class apibot():
 
             return data
 
-
     def check_orders(self, markets):
         stop_loss_percentage = 5
         take_profit_percentage = 4
@@ -303,67 +291,68 @@ class apibot():
             current_price = bot.get_market_price(market)
             df = self.get_bitvavo_data(market, '15m', 100)
             df = self.add_indicators(df)
-            
+
             if df is not None:
                 last_row = df.iloc[-1]
                 if self.check_balance('EUR') and last_row['EMA_above']:
-                    quantity = round(eur_per_trade / current_price,3)
-                    amount = round(quantity * current_price,2)
-                    stop_loss_price = current_price / (1+(stop_loss_percentage/100))
-                    take_profit_price = current_price * (1+(take_profit_percentage/100))
+                    quantity = round(eur_per_trade / current_price, 3)
+                    amount = round(quantity * current_price, 2)
+                    stop_loss_price = current_price / (1 + (stop_loss_percentage / 100))
+                    take_profit_price = current_price * (1 + (take_profit_percentage / 100))
                     limit_price = stop_loss_price * 0.99
 
                     num_decimals_sl = 0 if stop_loss_price >= 1000 else \
-                    1 if stop_loss_price >= 1000 < 10000 else \
-                    2 if stop_loss_price >= 100 < 1000 else \
-                    3 if stop_loss_price >= 10 < 100 else \
-                    4 if stop_loss_price >= 1 < 10 else \
-                    5 if stop_loss_price < 1 else None
+                        1 if stop_loss_price >= 1000 < 10000 else \
+                        2 if stop_loss_price >= 100 < 1000 else \
+                        3 if stop_loss_price >= 10 < 100 else \
+                        4 if stop_loss_price >= 1 < 10 else \
+                        5 if stop_loss_price < 1 else None
 
                     num_decimals_tp = 0 if take_profit_price >= 1000 else \
-                    1 if take_profit_price >= 1000 < 10000 else \
-                    2 if take_profit_price >= 100 < 1000 else \
-                    3 if take_profit_price >= 10 < 100 else \
-                    4 if take_profit_price >= 1 < 10 else \
-                    5 if take_profit_price < 1 else None
+                        1 if take_profit_price >= 1000 < 10000 else \
+                        2 if take_profit_price >= 100 < 1000 else \
+                        3 if take_profit_price >= 10 < 100 else \
+                        4 if take_profit_price >= 1 < 10 else \
+                        5 if take_profit_price < 1 else None
 
                     num_decimals_lp = 0 if limit_price >= 1000 else \
-                    1 if limit_price >= 1000 < 10000 else \
-                    2 if limit_price >= 100 < 1000 else \
-                    3 if limit_price >= 10 < 100 else \
-                    4 if limit_price >= 1 < 10 else \
-                    5 if limit_price < 1 else None
+                        1 if limit_price >= 1000 < 10000 else \
+                        2 if limit_price >= 100 < 1000 else \
+                        3 if limit_price >= 10 < 100 else \
+                        4 if limit_price >= 1 < 10 else \
+                        5 if limit_price < 1 else None
 
                     stop_loss_price = round(stop_loss_price, num_decimals_sl)
                     take_profit_price = round(take_profit_price, num_decimals_tp)
                     limit_price = round(limit_price, num_decimals_lp)
 
                     self._buy_signals[market] = {"hoeveelheid": quantity, "orderprijs": amount,
-                    "take_profit": take_profit_price, "stop_loss": stop_loss_price, "stop_limit": limit_price,
-                    "huidige_marktprijs": current_price}
+                                                 "take_profit": take_profit_price, "stop_loss": stop_loss_price,
+                                                 "stop_limit": limit_price,
+                                                 "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
+            print(open_orders)
             if os.path.exists(self._file_path) and self._file_path is not None:
                 with open(self._file_path, 'r') as f:
-                    data = json.load(f)
-                    for order in data:
+                    orders = json.load(f)
+                    for order in orders:
                         for i in open_orders:
                             if isinstance(order, dict) and order['market'] == market and order['Id'] == i['orderId']:
                                 profit = round((float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
-                                order['huidige_marktprijs'] = current_price 
+                                order['huidige_marktprijs'] = current_price
                                 order['profit_percentage'] = "{}%".format(profit)
-                            
+
                                 if last_row['EMA_below'] and profit >= 2:
                                     data = {"market": market, "amount": order["amount"], "Id": order["Id"],
                                             "total_paid": order["total_paid"]}
-                                    
-                                    bitvavo.cancelOrder(market, order["Id"])
+
                                     self._placesellorders.append(data)
-                                    
-                with open (self._file_path, 'w') as f:
-                    json.dump(data, f, indent=4)
-                    
-                                    
+
+                                    with open(self._file_path, 'w') as f:
+                                        json.dump(orders, f, indent=4)
+
+
 if __name__ == '__main__':
     bot = apibot()
     bot.check_orders(['RED-EUR', 'MKR-EUR', 'ICP-EUR'])
