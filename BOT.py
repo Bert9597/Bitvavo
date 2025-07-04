@@ -208,7 +208,7 @@ class apibot():
                                     order['date'] = str(today)
                                     order['type'] = "Sold"
                                     
-                        json.dump(data, f, indent=4)
+                            json.dump(data, f, indent=4)
 
         if self._placebuyorder:
             market = self._placebuyorder['market']
