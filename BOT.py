@@ -155,6 +155,7 @@ class apibot():
                     data = []
             else:
                 data = []
+                
             data.append(self._writebuyorder)
 
             with open(self._file_path, 'w') as f:
@@ -229,9 +230,6 @@ class apibot():
                 success_message = "Kooporder succesvol!"
                 await self._bot.send_message(chat_id=self._chat_id, text=success_message)
                 await self.place_stop_loss()
-
-        else:
-            pass
 
     def get_market_price(self, symbol):
         ticker = bitvavo.tickerPrice({'market': symbol})
