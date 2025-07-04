@@ -200,11 +200,5 @@
         "Id": "00000000-0000-05d4-0100-000184423eab",
         "huidige_marktprijs": 0.26228,
         "profit_percentage": "0.0%"
-    },
-    {
-        "market": "ICP-EUR",
-        "amount": "2.441",
-        "Id": "00000000-0000-04ad-0100-000180c34e75",
-        "total_paid": 10.04
     }
 ]
