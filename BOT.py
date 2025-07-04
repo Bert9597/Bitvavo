@@ -173,10 +173,7 @@ class apibot():
                 
                 cancel_order = bitvavo.cancelOrder(market, id)
                 sell_order = bitvavo.placeOrder(market, "sell", "market", {'amount': amount,  'operatorId': self._operator_id})
-                amount_received = float(sell_order["filledAmountQuote"])
-                fee_paid = float(sell_order["fills"][0]["fee"])
-                total_received = round(amount_received-fee_paid,2)
-                profit = round(total_received-total_paid,2)
+                
                 
                 if 'error' in cancel_order:
                     error_message = f"Fout bij annuleren van stoploss order: {id}"
@@ -189,6 +186,11 @@ class apibot():
 
                 else:
                     today = date.today()
+                    amount_received = float(sell_order["filledAmountQuote"])
+                    fee_paid = float(sell_order["fills"][0]["fee"])
+                    total_received = round(amount_received-fee_paid,2)
+                    profit = round(total_received-total_paid,2)
+                    
                     success_message = f"Verkoop order: {market} succesvol\n" \
                                       f"€{profit} winst!"
                     await self._bot.send_message(chat_id=self._chat_id, text=success_message)
