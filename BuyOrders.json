@@ -209,5 +209,14 @@
         "total_paid": 30.08,
         "Id": "00000000-0000-04ad-0100-00018cf1b6b2",
         "operatorId": 4537
+    },
+    {
+        "type": "Open",
+        "market": "ICP-EUR",
+        "amount": "7.359",
+        "price": "4.0864",
+        "total_paid": 30.15,
+        "Id": "00000000-0000-04ad-0100-00018cfd3287",
+        "operatorId": 4537
     }
 ]
