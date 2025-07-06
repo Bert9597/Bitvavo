@@ -332,7 +332,6 @@ class apibot():
                                                  "huidige_marktprijs": current_price}
 
             open_orders = bitvavo.ordersOpen({})
-            print(open_orders)
             if os.path.exists(self._file_path) and self._file_path is not None:
                 with open(self._file_path, 'r') as f:
                     orders = json.load(f)
@@ -343,14 +342,14 @@ class apibot():
                                 order['huidige_marktprijs'] = current_price
                                 order['profit_percentage'] = "{}%".format(profit)
 
+                                with open(self._file_path, 'w') as f:
+                                    json.dump(orders, f, indent=4)
+
                                 if last_row['EMA_below'] and profit >= 2:
                                     data = {"market": market, "amount": order["amount"], "Id": order["Id"],
                                             "total_paid": order["total_paid"]}
 
                                     self._placesellorders.append(data)
-
-                                    with open(self._file_path, 'w') as f:
-                                        json.dump(orders, f, indent=4)
 
 
 if __name__ == '__main__':
