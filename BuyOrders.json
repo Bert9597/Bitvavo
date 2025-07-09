@@ -268,5 +268,14 @@
         "operatorId": 4537,
         "huidige_marktprijs": 1631.8,
         "profit_percentage": "-1.09%"
+    },
+    {
+        "type": "Open",
+        "market": "MKR-EUR",
+        "amount": "0.018",
+        "price": "1644.2",
+        "total_paid": 29.67,
+        "Id": "00000000-0000-04f1-0100-0001963fc8ac",
+        "operatorId": 4537
     }
 ]
