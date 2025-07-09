@@ -209,8 +209,8 @@
         "total_paid": 30.08,
         "Id": "00000000-0000-04ad-0100-00018cf1b6b2",
         "operatorId": 4537,
-        "huidige_marktprijs": 4.2369,
-        "profit_percentage": "3.52%"
+        "huidige_marktprijs": 4.2164,
+        "profit_percentage": "3.01%"
     },
     {
         "type": "Open",
@@ -220,8 +220,8 @@
         "total_paid": 30.15,
         "Id": "00000000-0000-04ad-0100-00018cfd3287",
         "operatorId": 4537,
-        "huidige_marktprijs": 4.2369,
-        "profit_percentage": "3.68%"
+        "huidige_marktprijs": 4.2164,
+        "profit_percentage": "3.18%"
     },
     {
         "type": "Open",
@@ -231,8 +231,8 @@
         "total_paid": 30.74,
         "Id": "00000000-0000-04f1-0100-00018e98eb75",
         "operatorId": 4537,
-        "huidige_marktprijs": 1649.5,
-        "profit_percentage": "2.22%"
+        "huidige_marktprijs": 1631.8,
+        "profit_percentage": "1.12%"
     },
     {
         "type": "Open",
@@ -251,8 +251,8 @@
         "total_paid": 29.19,
         "Id": "00000000-0000-04f1-0100-00018f13bed7",
         "operatorId": 4537,
-        "huidige_marktprijs": 1649.5,
-        "profit_percentage": "1.98%"
+        "huidige_marktprijs": 1631.8,
+        "profit_percentage": "0.89%"
     },
     {
         "type": "Open",
@@ -262,7 +262,7 @@
         "total_paid": 29.77,
         "Id": "00000000-0000-04f1-0100-0001937342ea",
         "operatorId": 4537,
-        "huidige_marktprijs": 1649.5,
-        "profit_percentage": "-0.01%"
+        "huidige_marktprijs": 1631.8,
+        "profit_percentage": "-1.09%"
     }
 ]
