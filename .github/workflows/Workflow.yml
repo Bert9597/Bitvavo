@@ -43,7 +43,7 @@ jobs:
           if (Test-Path "$env:FILE_PATH_BUYORDERS") {
             git add $env:FILE_PATH_BUYORDERS
             git commit -m "Update $env:FILE_PATH_BUYORDERS"
-            git push
+            git push origin main
           } else {
             Write-Output "No changes to commit."
           }
