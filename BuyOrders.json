@@ -287,5 +287,14 @@
         "profit_percentage": "2.49%",
         "eur_profit": 0.47,
         "date": "2025-07-10"
+    },
+    {
+        "type": "Open",
+        "market": "ICP-EUR",
+        "amount": "6.765",
+        "price": "4.443",
+        "total_paid": 30.14,
+        "Id": "00000000-0000-04ad-0100-000198b2a281",
+        "operatorId": 4537
     }
 ]
