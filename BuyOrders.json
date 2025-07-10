@@ -328,6 +328,8 @@
         "price": "0.27486",
         "total_paid": 29.99,
         "Id": "00000000-0000-05d4-0100-00019a589d0b",
-        "operatorId": 4537
+        "operatorId": 4537,
+        "huidige_marktprijs": 0.27537,
+        "profit_percentage": "0.19%"
     }
 ]
