@@ -183,6 +183,7 @@ class apibot():
                 else:
                     today = date.today()
                     amount_received = float(sell_order["filledAmountQuote"])
+                    print(amount_received)
                     fee_paid = float(sell_order["fills"][0]["fee"])
                     total_received = round(amount_received - fee_paid, 2)
                     profit = round(total_received - total_paid, 2)
