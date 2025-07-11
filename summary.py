@@ -26,14 +26,11 @@ async def send_summary():
                     
                 total_profit.append(order['eur_profit']) 
             
-    if total_profit:
-        await bot.send_message(chat_id=chat_id, text=f"Weekoverzicht\n\nTotaal gerealiseerde inkomsten: €{round(sum(total_profit),2)}\n")
-        
-    if weekly_profit:
-        total_weekly_profit = round(sum(weekly_profit),2)
+    if total_profit and weekly_profit:
         avg_weekly_profit_per_trade = round(total_weekly_profit / len(weekly_profit),2)
-        await bot.send_message(chat_id=chat_id, text=f"Inkomsten: €{total_weekly_profit}\n"
-                               f"Gemmidelde winst per trade: €{avg_weekly_profit_per_trade}")
+        await bot.send_message(chat_id=chat_id, text=f"Weekoverzicht\n\nTotaal inkomsten: €{round(sum(total_profit),2)}\n"
+                               f"Inkomsten: €{total_weekly_profit}\n"
+                               f"Gemmidelde winst per trade: €{avg_weekly_profit_per_trade}"))
 
 if __name__ == '__main__':
     asyncio.run(send_summary())
