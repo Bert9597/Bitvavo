@@ -35,4 +35,4 @@ async def send_summary():
                          f"Inkomsten: €{total_weekly_profit}\n"
                          f"Gemmidelde winst per trade: €{avg_weekly_profit_per_trade}")
 
-send_summary()
+await send_summary()
