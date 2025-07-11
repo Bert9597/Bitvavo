@@ -328,7 +328,7 @@
         "date": "2025-07-11"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "RED-EUR",
         "amount": "62.30529595",
         "price": "0.27486",
@@ -336,7 +336,9 @@
         "Id": "00000000-0000-05d4-0100-00019a589d0b",
         "operatorId": 4537,
         "huidige_marktprijs": 0.28932,
-        "profit_percentage": "5.26%"
+        "profit_percentage": "5.26%",
+        "eur_profit": -12.56,
+        "date": "2025-07-11"
     },
     {
         "type": "Open",
