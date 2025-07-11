@@ -24,11 +24,11 @@ with open(buyorders, "r") as f:
             total_profit.append(order['eur_profit']) 
         
 if total_profit:
-    bot.send_message(f"Totaal gerealiseerde inkomsten: €{round(sum(total_profit),2)}")
+    bot.send_message(chat_id=chat_id, text=f"Totaal gerealiseerde inkomsten: €{round(sum(total_profit),2)}")
     
 if weekly_profit:
     total_weekly_profit = round(sum(weekly_profit),2)
     avg_weekly_profit_per_trade = round(total_weekly_profit / len(weekly_profit),2)
-    bot.send_message(f"Weekoverzicht\n"
+    bot.send_message(chat_id=chat_id, text=f"Weekoverzicht\n"
                      f"Inkomsten: €{total_weekly_profit}\n"
                      f"Gemmidelde winst per trade: €{avg_weekly_profit_per_trade}")
