@@ -2,9 +2,10 @@ import json
 from datetime import datetime, timedelta
 from telegram import Bot
 import os
+from dateutil import parser
 
 now = datetime.now()
-past_week = str(now-timedelta(days=7))
+past_week = now-timedelta(days=8)
 buyorders = os.getenv("FILE_PATH_BUYORDERS")
 api_keys = json.loads(os.getenv('API_KEYS'))
 weekly_profit = []
@@ -17,7 +18,8 @@ with open(buyorders, "r") as f:
     data = json.load(f)
     for order in data:
         if "Sold" in order and "date" in order and "eur_profit" in order:
-            if order["date"] >= past_week:
+            order_date = parser.parse(order['date'])
+            if order_date >= past_week:
                 print(past_week)
                 weekly_profit.append(order['eur_profit'])
                 
