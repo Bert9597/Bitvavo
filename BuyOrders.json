@@ -177,7 +177,16 @@
         "total_paid": 30.31,
         "Id": "00000000-0000-04ad-0100-00019ef17277",
         "operatorId": 4537,
-        "huidige_marktprijs": 4.7127,
-        "profit_percentage": "-0.99%"
+        "huidige_marktprijs": 4.7358,
+        "profit_percentage": "-0.5%"
+    },
+    {
+        "type": "Open",
+        "market": "ICP-EUR",
+        "amount": "6.335",
+        "price": "4.7277",
+        "total_paid": 30.03,
+        "Id": "00000000-0000-04ad-0100-0001a02bdaf1",
+        "operatorId": 4537
     }
 ]
