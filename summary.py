@@ -18,6 +18,7 @@ with open(buyorders, "r") as f:
     data = json.load(f)
     for order in data:
         if "Sold" in order and "date" in order and "eur_profit" in order:
+            print(order)
             order_date = parser.parse(order['date'])
             if order_date >= past_week:
                 print(past_week)
