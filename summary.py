@@ -35,4 +35,5 @@ async def send_summary():
                          f"Inkomsten: €{total_weekly_profit}\n"
                          f"Gemmidelde winst per trade: €{avg_weekly_profit_per_trade}")
 
-await send_summary()
+if __name__ == '__main__':
+    asyncio.run(send_summary())
