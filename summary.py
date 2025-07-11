@@ -16,12 +16,15 @@ bot = Bot(token=token)
 with open(buyorders, "r") as f:
     data = json.load(f)
     for order in data:
-        if "Sold" and "date" and "eur_profit" in order:
+        if "Sold" in order and "date" in order and "eur_profit" in order:
             if order["date"] >= past_week:
                 print(past_week)
                 weekly_profit.append(order['eur_profit'])
                 
             total_profit.append(order['eur_profit']) 
+            
+print(weekly_profit)
+print(total_profit)
         
 if total_profit:
     bot.send_message(chat_id=chat_id, text=f"Totaal gerealiseerde inkomsten: €{round(sum(total_profit),2)}")
