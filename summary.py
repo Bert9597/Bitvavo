@@ -17,11 +17,9 @@ bot = Bot(token=token)
 with open(buyorders, "r") as f:
     data = json.load(f)
     for order in data:
-        if "Sold" in order:
-            print(order)
+        if "Sold" in order.values() and "date" in order.keys() and "eur_profit" in order.keys():
             order_date = parser.parse(order['date'])
             if order_date >= past_week:
-                print(past_week)
                 weekly_profit.append(order['eur_profit'])
                 
             total_profit.append(order['eur_profit']) 
