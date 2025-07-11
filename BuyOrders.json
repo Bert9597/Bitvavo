@@ -357,7 +357,16 @@
         "total_paid": 29.57,
         "Id": "00000000-0000-04f1-0100-00019c191d0b",
         "operatorId": 4537,
-        "huidige_marktprijs": 1744.7,
-        "profit_percentage": "0.57%"
+        "huidige_marktprijs": 1740.6,
+        "profit_percentage": "0.33%"
+    },
+    {
+        "type": "Open",
+        "market": "RED-EUR",
+        "amount": "106.959",
+        "price": "0.30192",
+        "total_paid": 32.38,
+        "Id": "00000000-0000-05d4-0100-00019d3f8925",
+        "operatorId": 4537
     }
 ]
