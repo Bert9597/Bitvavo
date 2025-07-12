@@ -337,20 +337,37 @@ class apibot():
                 with open(self._file_path, 'r') as f:
                     orders = json.load(f)
                     for order in orders:
-                        for i in open_orders:
-                            if isinstance(order, dict) and order['market'] == market and order['Id'] == i['orderId']:
-                                profit = round((float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
-                                order['huidige_marktprijs'] = current_price
-                                order['profit_percentage'] = "{}%".format(profit)
+                        profit = round(
+                            (float(current_price) - float(order['price'])) / float(order['price']) * 100, 2)
+                        
+                        x = bitvavo.getOrder(market, order['Id'])
+                        if not 'errorCode' in x:
+                            orderId = x['orderId']
+                            status = x['status']
+                            ordertype = x['orderType']
+                            fee = x['feePaid']
+                            filled = x['filledAmountQuote']
+
+                            if status == 'filled' and orderId == order['Id'] and ordertype == 'stopLossLimit':
+                                loss = float(filled) - float(fee) - float(order['total_paid'])
+                                order['type'] = 'Sold'
+                                order['date'] = str(today)
+                                order['eur_loss'] = loss
 
                                 with open(self._file_path, 'w') as f:
                                     json.dump(orders, f, indent=4)
 
-                                if last_row['EMA_below'] and profit >= 2:
-                                    data = {"market": market, "amount": order["amount"], "Id": order["Id"],
-                                            "total_paid": order["total_paid"]}
+                            else:
+                                for i in open_orders:
+                                    if isinstance(order, dict) and i['orderId'] == order['Id']:
+                                        order['huidige_marktprijs'] = current_price
+                                        order['profit_percentage'] = "{}%".format(profit)
 
-                                    self._placesellorders.append(data)
+                                    if last_row['EMA_below'] and profit >= 2:
+                                        data = {"market": market, "amount": order["amount"], "Id": order["Id"],
+                                                "total_paid": order["total_paid"]}
+    
+                                        self._placesellorders.append(data)
 
 
 if __name__ == '__main__':
