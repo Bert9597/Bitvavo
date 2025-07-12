@@ -334,6 +334,7 @@ class apibot():
 
             open_orders = bitvavo.ordersOpen({})
             if os.path.exists(self._file_path) and self._file_path is not None:
+                today = date.today()
                 with open(self._file_path, 'r') as f:
                     orders = json.load(f)
                     for order in orders:
