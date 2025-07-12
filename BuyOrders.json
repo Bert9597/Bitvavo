@@ -39,13 +39,15 @@
         "date": "2025-07-10"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "RED-EUR",
         "amount": "111.57",
         "price": "0.26615",
         "total_paid": 29.77,
         "Id": "00000000-0000-05d4-0100-00018edc0b57",
-        "operatorId": 4537
+        "operatorId": 4537,
+        "date": "2025-07-12",
+        "eur_loss": -1.3900000000000006
     },
     {
         "type": "Sold",
@@ -139,16 +141,18 @@
         "date": "2025-07-11"
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "RED-EUR",
         "amount": "105.337",
         "price": "0.28566",
         "total_paid": 30.17,
         "Id": "00000000-0000-05d4-0100-00019b2c628a",
-        "operatorId": 4537
+        "operatorId": 4537,
+        "date": "2025-07-12",
+        "eur_loss": -1.9299999999999997
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "MKR-EUR",
         "amount": "0.017",
         "price": "1734.8",
@@ -156,10 +160,12 @@
         "Id": "00000000-0000-04f1-0100-00019c191d0b",
         "operatorId": 4537,
         "huidige_marktprijs": 1709.9,
-        "profit_percentage": "-1.44%"
+        "profit_percentage": "-1.44%",
+        "date": "2025-07-12",
+        "eur_loss": -1.5499999999999972
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "RED-EUR",
         "amount": "106.959",
         "price": "0.30192",
@@ -167,10 +173,12 @@
         "Id": "00000000-0000-05d4-0100-00019d3f8925",
         "operatorId": 4537,
         "huidige_marktprijs": 0.29537,
-        "profit_percentage": "-2.17%"
+        "profit_percentage": "-2.17%",
+        "date": "2025-07-12",
+        "eur_loss": -1.4600000000000009
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "6.352",
         "price": "4.7596",
@@ -178,10 +186,12 @@
         "Id": "00000000-0000-04ad-0100-00019ef17277",
         "operatorId": 4537,
         "huidige_marktprijs": 4.6042,
-        "profit_percentage": "-3.26%"
+        "profit_percentage": "-3.26%",
+        "date": "2025-07-12",
+        "eur_loss": -1.8500000000000014
     },
     {
-        "type": "Open",
+        "type": "Sold",
         "market": "ICP-EUR",
         "amount": "6.335",
         "price": "4.7277",
@@ -189,6 +199,8 @@
         "Id": "00000000-0000-04ad-0100-0001a02bdaf1",
         "operatorId": 4537,
         "huidige_marktprijs": 4.6042,
-        "profit_percentage": "-2.61%"
+        "profit_percentage": "-2.61%",
+        "date": "2025-07-12",
+        "eur_loss": -1.6400000000000041
     }
 ]
