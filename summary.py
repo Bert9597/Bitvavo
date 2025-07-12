@@ -51,8 +51,12 @@ async def send_summary():
                 message += f"Verliezen (deze week): €{round(sum(weekly_loss), 2)}\n"
 
             if total_loss:
-                message += f"Totaal verlies: €{round(sum(total_loss), 2)}"
+                if total_profit:
+                    message += f"Totaal verlies: €{round(sum(total_loss), 2)}\nWinst:  €{sum(total_profit) - sum(total_loss)}"
 
+                elif not total_profit:
+                    message += f"Totaal verlies: €{round(sum(total_loss), 2)}
+                    
             await bot.send_message(chat_id=chat_id, text=message)
 
         else:
