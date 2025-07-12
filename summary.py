@@ -29,7 +29,7 @@ async def send_summary():
                         weekly_profit.append(order['eur_profit'])
 
                 elif "loss" in order.keys():
-                    total_loss.append(order["loss])
+                    total_loss.append(order["loss"])
                     if order_date >= past_week:
                         weekly_loss.append(order["loss"]
                 
